@@ -22,27 +22,27 @@ grad = zeros(size(theta));
 
 % ====================== VECTORIZED SOLUTION ======================
 
-% thetatransX = X*theta;
-% hf = sigmoid(thetatransX);
+thetatransX = X*theta;
+hf = sigmoid(thetatransX);
 
-% cost = -log(hf')*y - log(1-hf')*(1-y);
+cost = -log(hf')*y - log(1-hf')*(1-y);
 
-% J=J+(1/m)*cost;
+J=J+(1/m)*cost;
 
 	
 % =============================================================
 	
 % ====================== UNVECTORIZED SOLUTION ======================
 
-cost=0;
-thetatransX = X*theta;
-hf = sigmoid(thetatransX);
+% cost=0;
+% thetatransX = X*theta
+% hf = sigmoid(thetatransX);
 
-for i=1:m
-	cost = cost + -y(i,1)*log(hf(i,1)) - (1-y(i,1))*log(1-hf(i,1));
-end
+% for i=1:m
+	% cost = cost + -y(i,1)*log(hf(i,1)) - (1-y(i,1))*log(1-hf(i,1));
+% end
 
-J=J+(1/m)*cost;
+% J=J+(1/m)*cost;
 
 % =============================================================
 

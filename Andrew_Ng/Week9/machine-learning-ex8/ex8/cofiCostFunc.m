@@ -40,18 +40,72 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
+cost = 0;
+Theta_reg = 0;
+X_reg = 0;
+
+	for i = 1:size(R,1)
+		for j = 1:size(R,2)
+			if(R(i,j)==1)		
+				cost = cost + (Theta(j,:)*X(i,:)' - Y(i,j))^2;
+	
+			end	
+		end	
+	end
+	
+	for j = 1:size(R,2)
+		for k=1:size(X,2)
+			Theta_reg = Theta_reg + Theta(j,k)^2;
+		end
+	end
+	
+	for i = 1:size(R,1)
+		for k=1:size(X,2)
+			X_reg = X_reg + X(i,k)^2;
+		end
+	end
+	
+	
+	
+	 J = (1/2)*cost + (lambda/2)*(Theta_reg+X_reg);
+
+Theta_grad1 = zeros(size(Theta_grad));
+X_grad1 = zeros(size(X_grad));
+
+	for i = 1:size(R,1)
+		for j = 1:size(R,2)
+			for k=1:size(X,2)
+				if(R(i,j)==1)
+					Theta_grad1(j,k) = Theta_grad1(j,k) + (Theta(j,:)*X(i,:)' - Y(i,j))*X(i,k);
+				end
+			end
+		end		
+	end
+	
+	for j = 1:size(R,2)
+		for k=1:size(X,2)
+			Theta_grad(j,k) = Theta_grad1(j,k) +  lambda*Theta(j,k);
+		end
+	end	
+	
+	
+
+	for i = 1:size(R,1)
+		for j = 1:size(R,2)
+			for k=1:size(X,2)
+				if(R(i,j)==1)
+					X_grad1(i,k) = X_grad1(i,k) + (Theta(j,:)*X(i,:)' - Y(i,j))*Theta(j,k);
+				end
+			end
+		end		
+	end	
 
 
-
-
-
-
-
-
-
-
-
-
+	for i = 1:size(R,1)
+		for k=1:size(X,2)
+			X_grad(i,k) = X_grad1(i,k) +  lambda*X(i,k);
+		end
+	end	
 
 
 
